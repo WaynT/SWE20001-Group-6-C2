@@ -1,0 +1,111 @@
+.navbar {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: #808080; /* Set the background to transparent */
+  box-shadow: none; /* Remove the box shadow */
+  font-family: 'Dancing Script', cursive;
+}
+
+.navbar li {
+  margin: 0;
+  padding: 0;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #ccc;
+  font-weight: bold;
+  padding: 10px 20px;
+  transition: color 0.3s ease, text-shadow 0.3s ease; /*add text-shadow transition */
+}
+
+.navbar a:hover {
+  color: white; /* Change text color to gold on hover */
+  text-shadow: 0 0 10px #888; /*add gold glow effect on hover */
+}
+
+.navbar a.active {
+  color: white; /* change the text color for active link */
+}
+
+
+.navbar .logo {
+  margin-right: auto;
+  padding: 0;
+}
+
+
+.navbar .logo a {
+  display: block;
+  padding: 10px;
+}
+
+.navbar a,
+.navbar .navbar-link {
+  text-decoration: none;
+  color: #ccc;
+  font-weight: bold;
+  font-size: 2.5rem; /* Adjust the font size as needed */
+  padding: 10px 20px;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.navbar .navbar-link {
+  display: block;
+  padding: 10px 20px;
+  color: #ccc;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease, text-shadow 0.3s ease; /* add glow transition */
+}
+
+.navbar .navbar-link:hover {
+  color: white; /* change text color on hover */
+  text-shadow: 0 0 10px #888; /* add glow effect on hover */
+}
+
+h1 
+{
+    font-weight: bold;
+    font-size: 65px;
+}
+
+h2
+{
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.shoppingMain
+{
+	text-align: center;
+	background-color: #FFE5CC;
+}
+
+.shoppingItem
+{
+  display: flex;
+  align-items: left;
+  justify-content: left;
+
+}
+
+.itemsSection
+{
+      background-color: #8899AC;
+      text-align:left;
+}
+.shoppingItems 
+{
+    display: block;
+	width:15%;
+	height:15%;
+}
+
+.itemsDescription
+{
+    font-size: 25px;
+    margin-left: 20%;
+}
