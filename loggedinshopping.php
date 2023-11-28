@@ -1,3 +1,55 @@
+<?php
+
+include 'settings.php';
+session_start();
+$user_id = $_SESSION['user_id'];
+
+if(!isset($user_id)){
+   header('location:login.php');
+};
+
+if(isset($_GET['logout'])){
+   unset($user_id);
+   session_destroy();
+   header('location:loginpage.php');
+};
+
+if(isset($_POST['add_to_cart'])){
+    $product_name = $_POST['product_name'];
+    $product_price = $_POST['product_price'];
+    $product_image = $_POST['product_image'];
+    $product_quantity = $_POST['product_quantity'];
+ 
+    $select_cart = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND user_id = '$user_id'") or die('query failed');
+ 
+    if(mysqli_num_rows($select_cart) > 0){
+       echo "<script>alert('Product Already Added To Cart!');</script>";
+    } else {
+       mysqli_query($conn, "INSERT INTO `cart` (user_id, name, price, image, quantity) VALUES ('$user_id', '$product_name', '$product_price', '$product_image', '$product_quantity')") or die('query failed');
+       echo "<script>alert('Product Added To Cart!');</script>";
+    }
+}
+
+if(isset($_POST['update_cart'])){
+   $update_quantity = $_POST['cart_quantity'];
+   $update_id = $_POST['cart_id'];
+   mysqli_query($conn, "UPDATE `cart` SET quantity = '$update_quantity' WHERE id = '$update_id'") or die('query failed');
+   $message[] = 'cart quantity updated successfully!';
+}
+
+if(isset($_GET['remove'])){
+   $remove_id = $_GET['remove'];
+   mysqli_query($conn, "DELETE FROM `cart` WHERE id = '$remove_id'") or die('query failed');
+   header('location:cart.php');
+}
+  
+if(isset($_GET['delete_all'])){
+   mysqli_query($conn, "DELETE FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
+   header('location:cart.php');
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,7 +108,7 @@ session_start();
                     <nav class="classy-navbar justify-content-between" id="akameNav">
 
                         <!-- Logo -->
-                        <a class="nav-brand" href="index.html"><img width="100" src="./img/core-img/logo.png" alt=""></a>
+                        <a class="nav-brand" href="loggedinindex.php"><img width="100" src="./img/core-img/logo.png" alt=""></a>
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
@@ -72,26 +124,27 @@ session_start();
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul id="nav">
-                                    <li><a href="./index.php">Home</a></li>
+                                    <li ><a href="./loggedinindex.php">Home</a></li>
                                     <li><a href="#">Pages</a>
                                         <ul class="dropdown">
-                                            <li><a href="./index.php">- Home</a></li>
-                                            <li><a href="./about.php">- About Us</a></li>
-                                            <li><a href="./shopping.php">- Shopping</a></li>
-                                            <li><a href="./services.php">- Services</a></li>
-                                            <li><a href="./contact.php">- Contact</a></li>
+                                            <li><a href="./loggedinindex.php">- Home</a></li>
+                                            <li><a href="./loggedinabout.php">- About Us</a></li>
+                                            <li><a href="./loggedinshopping.php">- Shopping</a></li>
+                                            <li><a href="./loggedinservices.php">- Services</a></li>
+                                            <li><a href="./loggedincontact.php">- Contact</a></li>
                                         </ul>
                                     </li>
-                                    <li  class="active"><a href="./shopping.php">Shopping</a></li>
-                                    <li><a href="./about.php">About Us</a></li>
-                                    <li><a href="./services.php">Services</a></li>
-                                    <li><a href="./contact.php">Contact</a></li>
+                                    <li class="active"><a href="./loggedinshopping.php">Shopping</a></li>
+                                    <li><a href="./loggedinabout.php">About Us</a></li>
+                                    <li><a href="./loggedinservices.php">Services</a></li>
+                                    <li><a href="./loggedincontact.php">Contact</a></li>
                                 </ul>
 
                                 <!-- Cart Icon -->
                                 <div class="cart-icon ml-5 mt-4 mt-lg-0">
-                                    <a href="loginpage.php"><i class="icon_cart"></i></a>
+                                    <a href="cart.php"><i class="icon_cart"></i></a>
                                 </div>
+
                                 <?php
                                 if ($_SESSION["loggedin"] == true)
                                 {
@@ -109,7 +162,7 @@ session_start();
                                 {
                                     echo " <!-- Login Icon -->
                                     <div class='book-now-btn ml-5 mt-4 mt-lg-0 ml-md-4'>
-                                    <a href='loginpage.php' class='btn akame-btn'>Login</a>
+                                    <a href='index.php' class='btn akame-btn'>Logout</a>
                                     </div>";
                                 }
                                 ?>
@@ -132,7 +185,7 @@ session_start();
                         <h2>Shopping</h2>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html"><i class="icon_house_alt"></i> Home</a></li>
+                                <li class="breadcrumb-item"><a href="loggedinindex.php"><i class="icon_house_alt"></i> Home</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Shopping</li>
                             </ol>
                         </nav>
@@ -160,47 +213,50 @@ session_start();
                     </div>
                 </div>
             </div>
-            <form method="post" action = "loginpage.php">
+            
             <div class="row akame-portfolio-area">
-            <?php
+                <?php
+                require_once "settings.php";
+                $conn = new mysqli($host, $user, $pwd, $sql_db);
 
-            require_once "settings.php";
-            $conn = new mysqli($host, $user, $pwd, $sql_db);
-            if ($conn -> connect_error){
-                die("Connection failed: ".$conn->connect_error);
-            }
-            else
-            {
-                $query = "SELECT * FROM products ORDER BY id ASC";
-                $result = $conn->query($query);
-                if($result->num_rows > 0)
-                {
-                    while($row = $result->fetch_array())
-                    {
-                        echo "<!-- Single Shopping Item -->
-                        <div class='col-12 col-sm-6 col-lg-4 akame-portfolio-item "; echo $row["productCategory"]; echo " mb-30 wow fadeInUp' data-wow-delay='200ms'>
-                            <div class='akame-portfolio-single-item'>
-                                <img src='"; echo $row["image"]; echo "' alt=''>
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                } else {
+                    $query = "SELECT * FROM products ORDER BY id ASC";
+                    $result = $conn->query($query);
 
-                                <!-- Overlay Content -->
-                                <div class='overlay-content d-flex align-items-center justify-content-center'>
-                                    <div class='overlay-text text-center'>
-                                    <h4>"; echo $row["name"]; echo "</h4>
-                                    <p>"; echo $row["productDescription"]; echo "
-                                    <br>
-                                    <b>RM"; echo $row["price"]; echo "</b></p>
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_array()) {
+                            echo "
+                            <!-- Single Shopping Item -->
+                            <div class='col-12 col-sm-6 col-lg-4 akame-portfolio-item {$row["productCategory"]} mb-30 wow fadeInUp' data-wow-delay='200ms'>
+                                <div class='akame-portfolio-single-item'>
+                                    <img src='{$row["image"]}' alt=''>
+                                    
+                                    <!-- Overlay Content -->
+                                    <div class='overlay-content d-flex align-items-center justify-content-center'>
+                                        <div class='overlay-text text-center'>
+                                            <h4>{$row["name"]}</h4>
+                                            <p>{$row["productDescription"]}<br><b>RM{$row["price"]}</b></p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                    </div>
-                    <input type='submit' class='checkout-button' name='"; echo $row["productName"]; echo"' value='Add to Cart'>
-                </div>";
+                                <!-- Add the following input fields for each product -->
+                                <form method='post' action='loggedinshopping.php'>
+                                    <input type='hidden' name='product_name' value='{$row["name"]}'>
+                                    <input type='hidden' name='product_price' value='{$row["price"]}'>
+                                    <input type='hidden' name='product_image' value='{$row["image"]}'>
+                                    <input type='number' min='1' class='numberbar' name='product_quantity' value='1'>
+                                    <input type='submit' name='add_to_cart' value='Add to cart'>
+                                </form>
+                            </div>";
+                        }
                     }
                 }
-            }
-            ?>
+                ?>
             </div>
-            </form>
 
+            
             <div class="row">
                 <div class="col-12">
                     <div class="view-all-btn mt-30 text-center">

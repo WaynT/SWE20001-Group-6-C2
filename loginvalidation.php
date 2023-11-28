@@ -25,10 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($row["pass"] == $password) {
                 // Password is correct, create a session for the user
                 $_SESSION["username"] = $row["username"];
+                $_SESSION["identity"] = 'Staff';
                 $_SESSION["loggedin"] = true;
 
                 // Redirect to inventory.php
-                header("Location: inventory.php");
+                header("Location: staffindex.php");
                 exit();
             }
         } elseif ($customerUsernameResult && mysqli_num_rows($customerUsernameResult) == 1) {
@@ -38,10 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($row["pass"] == $password) {
                 // Password is correct, create a session for the user
                 $_SESSION["username"] = $row["customerusername"];
+                $_SESSION["identity"] = 'Customer';
                 $_SESSION["loggedin"] = true;
 
                 // Redirect to shopping.php
-                header("Location: shopping.php");
+                header("Location: index.php");
                 exit();
             }
         }

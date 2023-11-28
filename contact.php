@@ -15,9 +15,7 @@
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
-<?php
-session_start();
-?>
+
 </head>
 
 <body>
@@ -82,37 +80,21 @@ session_start();
                                             <li><a href="./contact.php">- Contact</a></li>
                                         </ul>
                                     </li>
-                                    <li  class="active"><a href="./shopping.php">Shopping</a></li>
+                                    <li><a href="./shopping.php">Shopping</a></li>
                                     <li><a href="./about.php">About Us</a></li>
                                     <li><a href="./services.php">Services</a></li>
-                                    <li><a href="./contact.php">Contact</a></li>
+                                    <li class="active"><a href="./contact.php">Contact</a></li>
                                 </ul>
 
                                 <!-- Cart Icon -->
                                 <div class="cart-icon ml-5 mt-4 mt-lg-0">
                                     <a href="loginpage.php"><i class="icon_cart"></i></a>
                                 </div>
-                                <?php
-                                if ($_SESSION["loggedin"] == true)
-                                {
-                                    echo "<!-- Logout Icon -->
-                                    <div class='book-now-btn ml-5 mt-4 mt-lg-0 ml-md-4'>
-                                    <form action='logoutverification.php' method='post'>
-                                    <button type='submit' name='login' class='btn akame-btn'>Log Out</button>
-                                    </form>
-                                    </div>
-                                    <div class='login_creds'>
-                                    <p>"; echo $_SESSION["identity"]; echo " logged in.</p>
-                                    <p>Username: "; echo $_SESSION["username"]; echo"</p></div>";
-                                }
-                                else
-                                {
-                                    echo " <!-- Login Icon -->
-                                    <div class='book-now-btn ml-5 mt-4 mt-lg-0 ml-md-4'>
-                                    <a href='loginpage.php' class='btn akame-btn'>Login</a>
-                                    </div>";
-                                }
-                                ?>
+
+                                <!-- Book Icon -->
+                                <div class="book-now-btn ml-5 mt-4 mt-lg-0 ml-md-4">
+                                    <a href="loginpage.php" class="btn akame-btn">Login</a>
+                                </div>
                             </div>
                             <!-- Nav End -->
                         </div>
@@ -123,103 +105,96 @@ session_start();
     </header>
     <!-- Header Area End -->
 
-    <!-- Breadcrumb Area Start -->
-    <section class="breadcrumb-area section-padding-80">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcrumb-content">
-                        <h2>Shopping</h2>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html"><i class="icon_house_alt"></i> Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Shopping</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Breadcrumb Area End -->
-
-    <!-- Portfolio Area Start -->
-
-    <section class="akame-portfolio section-padding-0-80 clearfix">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="portfolio-menu text-center mb-50">
-                        <button class="btn active" data-filter="*">All</button>
-                        <button class="btn" data-filter=".shampoo">Shampoo</button>
-                        <button class="btn" data-filter=".conditioner">Conditioner</button>
-                        <button class="btn" data-filter=".hairserum">Hair Serum</button>
-                        <button class="btn" data-filter=".hairmask">Hair Mask</button>
-                        <button class="btn" data-filter=".hairdye">Hair Dye</button>
-                        <button class="btn" data-filter=".haircurler">Hair Curler</button>
-                    </div>
-                </div>
-            </div>
-            <form method="post" action = "loginpage.php">
-            <div class="row akame-portfolio-area">
-            <?php
-
-            require_once "settings.php";
-            $conn = new mysqli($host, $user, $pwd, $sql_db);
-            if ($conn -> connect_error){
-                die("Connection failed: ".$conn->connect_error);
-            }
-            else
-            {
-                $query = "SELECT * FROM products ORDER BY id ASC";
-                $result = $conn->query($query);
-                if($result->num_rows > 0)
-                {
-                    while($row = $result->fetch_array())
-                    {
-                        echo "<!-- Single Shopping Item -->
-                        <div class='col-12 col-sm-6 col-lg-4 akame-portfolio-item "; echo $row["productCategory"]; echo " mb-30 wow fadeInUp' data-wow-delay='200ms'>
-                            <div class='akame-portfolio-single-item'>
-                                <img src='"; echo $row["image"]; echo "' alt=''>
-
-                                <!-- Overlay Content -->
-                                <div class='overlay-content d-flex align-items-center justify-content-center'>
-                                    <div class='overlay-text text-center'>
-                                    <h4>"; echo $row["name"]; echo "</h4>
-                                    <p>"; echo $row["productDescription"]; echo "
-                                    <br>
-                                    <b>RM"; echo $row["price"]; echo "</b></p>
-                                </div>
-                            </div>
-                    </div>
-                    <input type='submit' class='checkout-button' name='"; echo $row["productName"]; echo"' value='Add to Cart'>
-                </div>";
-                    }
-                }
-            }
-            ?>
-            </div>
-            </form>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="view-all-btn mt-30 text-center">
-                        <a href="shopping.php" class="btn akame-btn">View All Products</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Portfolio Area End -->
-
-    <!-- Border -->
-    <div class="container">
-        <div class="border-top"></div>
+    <!-- Google Maps Start -->
+    <div class="akame-google-maps-area">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48396.58860923626!2d-74.02909054214638!3d40.70069315381758!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew+York%2C+NY%2C+USA!5e0!3m2!1sen!2sbd!4v1547805689070" allowfullscreen></iframe>
     </div>
+    <!-- Google Maps End -->
 
-        <!-- Footer Area Start -->
-        <footer class="footer-area section-padding-80-0">
+    <!-- Contact Information Area Start -->
+    <section class="contact-information-area section-padding-80-0">
+        <div class="container">
+            <div class="row">
+                <!-- Single Contact Information -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single-contact-information mb-80">
+                        <i class="icon_phone"></i>
+                        <h4>Phone</h4>
+                        <p>+01-3-8888-6868</p>
+                    </div>
+                </div>
+
+                <!-- Single Contact Information -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single-contact-information mb-80">
+                        <i class="icon_pin"></i>
+                        <h4>Address</h4>
+                        <p>Iris Watson, 283 Fusce Rd,NY</p>
+                    </div>
+                </div>
+
+                <!-- Single Contact Information -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single-contact-information mb-80">
+                        <i class="icon_clock"></i>
+                        <h4>Open time</h4>
+                        <p>10:00 am to 23:00 pm</p>
+                    </div>
+                </div>
+
+                <!-- Single Contact Information -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single-contact-information mb-80">
+                        <i class="icon_mail"></i>
+                        <h4>Email</h4>
+                        <p>info.colorlib@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Information Area End -->
+
+    <!-- Contact Area Start -->
+    <section class="akame-contact-area bg-gray section-padding-80">
+        <div class="container">
+            <div class="row">
+                <!-- Section Heading -->
+                <div class="col-12">
+                    <div class="section-heading text-center">
+                        <h2>Leave message</h2>
+                        <p>Our staff will call back later and answer your questions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <!-- Form -->
+                    <form action="#" method="post" class="akame-contact-form border-0 p-0">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <input type="text" name="message-name" class="form-control mb-30" placeholder="Your Name">
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="email" name="message-email" class="form-control mb-30" placeholder="Email">
+                            </div>
+                            <div class="col-12">
+                                <textarea name="message" class="form-control mb-30" placeholder="Start the discussion..."></textarea>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn akame-btn btn-3 mt-15 active">Post Comment</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Area End -->
+
+    <!-- Footer Area Start -->
+    <footer class="footer-area section-padding-80-0">
         <div class="container">
             <div class="row justify-content-between">
 
@@ -227,10 +202,16 @@ session_start();
                 <div class="col-12 col-sm-6 col-md-4">
                     <div class="single-footer-widget mb-80">
                         <!-- Footer Logo -->
-                        <a href="#" class="footer-logo"><img src="img/core-img/logo.png" alt=""></a>
+                        <a href="#" class="footer-logo"><img width="100" src="img/core-img/logo.png" alt=""></a>
 
-                        <p class="mb-30">We would love to serve you and let you enjoy your hairstyling journey.</p>
+                        <p class="mb-30">We would love to serve you and let you enjoy your culinary experience. Excepteur sint occaecat cupidatat non proident.</p>
 
+                        <!-- Copywrite Text -->
+                        <div class="copywrite-text">
+                            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                        </div>
                     </div>
                 </div>
 
@@ -265,9 +246,9 @@ session_start();
 
                         <!-- Contact Address -->
                         <div class="contact-address">
-                            <p>Tel: (+60) 12-345-6789</p>
-                            <p>E-mail: xiaopingguo@gmail.com</p>
-                            <p>Address: 3, Jalan SS 15/8, Ss 15, 47500 Subang Jaya, Selangor</p>
+                            <p>Tel: (+12) 345 678 910</p>
+                            <p>E-mail: Hello.colorlib@gmail.com</p>
+                            <p>Address: Iris Watson, P.O. Box 283 8562 Fusce Rd, NY</p>
                         </div>
                     </div>
                 </div>

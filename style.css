@@ -1747,17 +1747,11 @@ input[type="reset"]:hover {
 }
 
 .button-container {
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  text-align: center;
 }
 
 .back-to {
-  position: absolute;
-  top: 70%;
-  left: 74%;
-  transform: translate(-50%, -50%);
+  text-align: right;
 }
 
 .akame-news-area {
@@ -1779,6 +1773,48 @@ form {
 
 .form-p {
   text-align: center;
+}
+
+.booking-details {
+  text-align: center;
+}
+
+.booking-list {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  flex-direction: column;
+  text-align: left; /* Align text to the left within the container */
+}
+
+.booking-item {
+  margin-bottom: 100px; /* Adjust the spacing as needed */
+}
+
+.booking-item p {
+  margin: 0;
+}
+
+.booking-item p strong {
+  font-weight: bold;
+}
+
+.button-back {
+position: absolute;
+top: 57%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
+
+.button-back2book {
+  text-align: center;
+  margin-top: 0px;
+}
+
+.check-availability {
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: 30px;
 }
 
 /*add to cart css*/
@@ -1803,4 +1839,39 @@ form {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+}
+
+/*login credentials css*/
+.login_creds {
+  text-align: left;
+  position: absolute;
+  right: 0;
+}
+
+/*inventory table css*/
+.appointment-table {
+  border-collapse: collapse;
+  width: 80%; /* Adjust the width as needed */
+  margin: 0 auto; /* Center the table horizontally */
+}
+
+.appointment-table th, .appointment-table td {
+  border: 1px solid #000;
+  padding: 8px;
+  text-align: center;
+}
+
+.appointment-table th {
+  background-color: #f2f2f2;
+}
+
+/* Center the "No appointments found" message */
+.no-appointments {
+  text-align: center;
+  font-size: 18px;
+}
+
+.manage-inventory {
+  text-align: center;
+  margin-bottom: 20px;
 }

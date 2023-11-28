@@ -1,5 +1,26 @@
 <?php
-session_start();
+
+include 'settings.php';
+
+if(isset($_POST['submit'])){
+
+   $name = mysqli_real_escape_string($conn, $_POST['name']);
+   $email = mysqli_real_escape_string($conn, $_POST['email']);
+   $pass = mysqli_real_escape_string($conn, md5($_POST['password']));
+   $cpass = mysqli_real_escape_string($conn, md5($_POST['cpassword']));
+
+   $select = mysqli_query($conn, "SELECT * FROM `user_form` WHERE email = '$email' AND password = '$pass'") or die('query failed');
+
+   if(mysqli_num_rows($select) > 0){
+      $message[] = 'user already exist!';
+   }else{
+      mysqli_query($conn, "INSERT INTO `user_form`(customerusername, email, password) VALUES('$name', '$email', '$pass')") or die('query failed');
+      $message[] = 'registered successfully!';
+      header('location:loginpage.php');
+   }
+
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -9,26 +30,25 @@ session_start();
     <link rel="shortcut icon" type="x-icon" href="imgs/Lilapple.png">
 </head>
 <body>
-    <form action="registration_validation.php" method="post">
-        <h2>REGISTER</h2>
-        <?php
-        // Check if there's an error message from a previous submission
-        if (isset($_SESSION['error'])) {
-            echo '<p class="error">' . $_SESSION['error'] . '</p>';
-            // Remove the error message from the session
-            unset($_SESSION['error']);
-        }
-        ?>
-        <label>Customer Username</label>
-        <input type="text" name="customer_username" placeholder="Insert Customer Username Here"><br>
+    <?php
+    if(isset($message)){
+       foreach($message as $message){
+          echo '<div class="message" onclick="this.remove();">'.$message.'</div>';
+       }
+    }
+    ?>
+    <div class="form-container">
 
-        <label>Password</label>
-        <input type="password" name="password" placeholder="Insert Password Here"><br>
-
-        <div class="form-buttons">
-            <a href="index.html" class="back-button">Back</a>
-            <button type="submit" name="register">Register</button>
-        </div>
-    </form>
+       <form action="" method="post">
+          <h3>register now</h3>
+          <input type="text" name="name" required placeholder="enter username" class="box">
+          <input type="email" name="email" required placeholder="enter email" class="box">
+          <input type="password" name="password" required placeholder="enter password" class="box">
+          <input type="password" name="cpassword" required placeholder="confirm password" class="box">
+          <input type="submit" name="submit" class="btn" value="register now">
+          <p>already have an account? <a href="loginpage.php">login now</a></p>
+       </form>
+    
+    </div>
 </body>
 </html>

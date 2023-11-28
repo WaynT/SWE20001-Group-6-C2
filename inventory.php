@@ -1,3 +1,8 @@
+<?php
+
+include 'settings.php';
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,33 +74,39 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul id="nav">
-                                    <li><a href="./index.html">Home</a></li>
+                                    <li><a href="./staffindex.php">Home</a></li>
                                     <li><a href="#">Pages</a>
                                         <ul class="dropdown">
-                                            <li><a href="./index.html">- Home</a></li>
-                                            <li><a href="./about.html">- About Us</a></li>
-                                            <li><a href="./shopping.php">- Shopping</a></li>
+                                            <li><a href="./staffindex.php">- Home</a></li>
                                             <li><a href="./inventory.php">- Inventory</a></li>
-                                            <li><a href="./services.html">- Services</a></li>
-                                            <li><a href="./contact.html">- Contact</a></li>
+                                            <li><a href="./appointmentmanage.php">- Appointment</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="./shopping.php">Shopping</a></li>
                                     <li class="active"><a href="./inventory.php">Inventory</a></li>
-                                    <li><a href="./about.html">About Us</a></li>
-                                    <li><a href="./services.html">Services</a></li>
-                                    <li><a href="./contact.html">Contact</a></li>
+                                    <li><a href="./appointmentmanage.php">Appointment</a></li>
                                 </ul>
 
-                                <!-- Cart Icon -->
-                                <div class="cart-icon ml-5 mt-4 mt-lg-0">
-                                    <a href="shoppingCart.html"><i class="icon_cart"></i></a>
-                                </div>
-
-                                <!-- Book Icon -->
-                                <div class="book-now-btn ml-5 mt-4 mt-lg-0 ml-md-4">
-                                    <a href="loginpage.php" class="btn akame-btn">Login</a>
-                                </div>
+                                <?php
+                                if ($_SESSION["loggedin"] == true)
+                                {
+                                    echo "<!-- Logout Icon -->
+                                    <div class='book-now-btn ml-5 mt-4 mt-lg-0 ml-md-4'>
+                                    <form action='logoutverification.php' method='post'>
+                                    <button type='submit' name='login' class='btn akame-btn'>Log Out</button>
+                                    </form>
+                                    </div>
+                                    <div class='login_creds'>
+                                    <p>"; echo $_SESSION["identity"]; echo " logged in.</p>
+                                    <p>Username: "; echo $_SESSION["username"]; echo"</p></div>";
+                                }
+                                else
+                                {
+                                    echo " <!-- Login Icon -->
+                                    <div class='book-now-btn ml-5 mt-4 mt-lg-0 ml-md-4'>
+                                    <a href='loginpage.php' class='btn akame-btn'>Login</a>
+                                    </div>";
+                                }
+                                ?>
                             </div>
                             <!-- Nav End -->
                         </div>
@@ -127,6 +138,14 @@
     <!-- Breadcrumb Area End -->
 
      <!-- Inventory -->
+     <section class="akame-portfolio section-padding-0-80 clearfix">
+     <div class="manage-inventory">
+            <form action="inventory.php" method="post">
+                <input type="submit" value="Edit" name = "edit">
+                <input type="submit" value="Add" name = "add">
+                <input type="submit" value="Delete" name = "delete">
+            </form>
+    </div>
 
      <?php
         require_once "settings.php";
@@ -146,7 +165,7 @@
             if (!$result) {
                 echo "<p>Something is wrong with ", $query, "</p>";
             } else {
-                echo "<table border = '\"1\"' width = '100%'>\n";
+                echo "<table class='appointment-table'>\n";
                 echo "<tr id='thead'>\n "
                     ."<th scope=\"col\">Inventory ID</th>\n "
                     ."<th scope=\"col\">Name</th>\n "
@@ -156,7 +175,7 @@
                     ."</tr>\n";
 
                 while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr id='tbody'>\n";
+                    echo "<tr>\n";
                     echo "<td>" ,$row["itemID"],"</td>\n";
                     echo "<td>" ,$row["name"],"</td>\n";
                     echo "<td>" ,$row["quantity"],"</td>\n";
@@ -170,15 +189,110 @@
             mysqli_close($conn);
         }
         ?>
+
+
+        <?php
+            if (isset($_POST['edit'])) {
+                echo "<div class='container'>
+                <br>
+                <br>
+                <h2> Edit the inventory </h2>
+                <form action='inventorymanagement.php' method='post'>
+                <div class='form-container'>
+                    <label for='name'>Inventory ID:</label>
+                    <input type='text' id='id' name='id' required>
+                </div>
+
+                <div class='form-container'>
+                    <label for='email'>Name:</label>
+                    <input type='text' id='name' name='name' required>
+                </div>
+
+                <div class='form-container'>
+                    <label for='phone'>Quantity:</label>
+                    <input type='text' id='quantity' name='quantity' required>
+                </div>
+
+                <div class='form-container'>
+                    <label for='phone'>Price:</label>
+                    <input type='text' id='price' name='price' required>
+                </div>
+
+                <div class='form-container'>
+                    <label for='phone'>Supplier:</label>
+                    <input type='text' id='supplier' name='supplier' required>
+                </div>
+
+                <div class='manage-inventory'>
+                        <input type='submit' method = 'post' value='Submit' name = 'edit'>
+                </div>
+                </form>";
+            }
+            if (isset($_POST['delete'])) {
+                echo "<div class='container'>
+                <br>
+                <br>
+                <h2> Edit the inventory </h2>
+                <form action='inventorymanagement.php' method='post'>
+                <div class='form-container'>
+                    <label for='name'>Inventory ID:</label>
+                    <input type='text' id='id' name='id' required>
+                </div>
+
+                <div class='manage-inventory'>
+                        <input type='submit' method = 'post' value='Submit' name = 'delete'>
+                </div>
+                </form>";
+            }
+            if (isset($_POST['add'])) {
+                echo "<div class='container'>
+                <br>
+                <br>
+                <h2> Edit the inventory </h2>
+                <form action='inventorymanagement.php' method='post'>
+                <div class='form-container'>
+                    <label for='name'>Inventory ID:</label>
+                    <input type='text' id='id' name='id' required>
+                </div>
+
+                <div class='form-container'>
+                    <label for='email'>Name:</label>
+                    <input type='text' id='name' name='name' required>
+                </div>
+
+                <div class='form-container'>
+                    <label for='phone'>Quantity:</label>
+                    <input type='text' id='quantity' name='quantity' required>
+                </div>
+
+                <div class='form-container'>
+                    <label for='phone'>Price:</label>
+                    <input type='text' id='price' name='price' required>
+                </div>
+
+                <div class='form-container'>
+                    <label for='phone'>Supplier:</label>
+                    <input type='text' id='supplier' name='supplier' required>
+                </div>
+
+                <div class='manage-inventory'>
+                        <input type='submit' method = 'post' value='Submit' name = 'add'>
+                </div>
+                </form>";
+            }
+        ?>
+
+        </section>
     <!-- Inventory Area End -->
 
-    <!-- Border -->
+
+     <!-- Border -->
     <div class="container">
         <div class="border-top"></div>
     </div>
 
-    <!-- Footer Area Start -->
-    <footer class="footer-area section-padding-80-0">
+        <!-- Footer Area Start -->
+        <footer class="footer-area section-padding-80-0">
         <div class="container">
             <div class="row justify-content-between">
 
@@ -186,16 +300,10 @@
                 <div class="col-12 col-sm-6 col-md-4">
                     <div class="single-footer-widget mb-80">
                         <!-- Footer Logo -->
-                        <a href="#" class="footer-logo"><img width="100" src="img/core-img/logo.png" alt=""></a>
+                        <a href="#" class="footer-logo"><img src="img/core-img/logo.png" alt=""></a>
 
-                        <p class="mb-30">We would love to serve you and let you enjoy your culinary experience. Excepteur sint occaecat cupidatat non proident.</p>
+                        <p class="mb-30">We would love to serve you and let you enjoy your hairstyling journey.</p>
 
-                        <!-- Copywrite Text -->
-                        <div class="copywrite-text">
-                            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                        </div>
                     </div>
                 </div>
 
@@ -230,9 +338,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
                         <!-- Contact Address -->
                         <div class="contact-address">
-                            <p>Tel: (+12) 345 678 910</p>
-                            <p>E-mail: Hello.colorlib@gmail.com</p>
-                            <p>Address: Iris Watson, P.O. Box 283 8562 Fusce Rd, NY</p>
+                            <p>Tel: (+60) 12-345-6789</p>
+                            <p>E-mail: xiaopingguo@gmail.com</p>
+                            <p>Address: 3, Jalan SS 15/8, Ss 15, 47500 Subang Jaya, Selangor</p>
                         </div>
                     </div>
                 </div>

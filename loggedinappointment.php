@@ -20,6 +20,8 @@ session_start();
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
+    
+
 </head>
 
 <body>
@@ -58,7 +60,7 @@ session_start();
                     <nav class="classy-navbar justify-content-between" id="akameNav">
 
                         <!-- Logo -->
-                        <a class="nav-brand" href="index.html"><img width="100" src="./img/core-img/logo.png" alt=""></a>
+                        <a class="nav-brand" href="loggedinindex.php"><img width="100" src="./img/core-img/logo.png" alt=""></a>
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
@@ -74,17 +76,26 @@ session_start();
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul id="nav">
-                                    <li class="active"><a href="./staffindex.php">Home</a></li>
+                                    <li ><a href="./loggedinindex.php">Home</a></li>
                                     <li><a href="#">Pages</a>
                                         <ul class="dropdown">
-                                            <li><a href="./staffindex.php">- Home</a></li>
-                                            <li><a href="./inventory.php">- Inventory</a></li>
-                                            <li><a href="./appointmentmanage.php">- Appointment</a></li>
+                                            <li><a href="./loggedinindex.php">- Home</a></li>
+                                            <li><a href="./loggedinabout.php">- About Us</a></li>
+                                            <li><a href="./loggedinshopping.php">- Shopping</a></li>
+                                            <li><a href="./loggedinservices.php">- Services</a></li>
+                                            <li><a href="./loggedincontact.php">- Contact</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="./inventory.php">Inventory</a></li>
-                                    <li><a href="./appointmentmanage.php">Appointment</a></li>
+                                    <li><a href="./loggedinshopping.php">Shopping</a></li>
+                                    <li><a href="./loggedinabout.php">About Us</a></li>
+                                    <li class="active"><a href="./loggedinservices.php">Services</a></li>
+                                    <li><a href="./loggedincontact.php">Contact</a></li>
                                 </ul>
+
+                                <!-- Cart Icon -->
+                                <div class="cart-icon ml-5 mt-4 mt-lg-0">
+                                    <a href="cart.php"><i class="icon_cart"></i></a>
+                                </div>
 
                                 <?php
                                 if ($_SESSION["loggedin"] == true)
@@ -103,7 +114,7 @@ session_start();
                                 {
                                     echo " <!-- Login Icon -->
                                     <div class='book-now-btn ml-5 mt-4 mt-lg-0 ml-md-4'>
-                                    <a href='loginpage.php' class='btn akame-btn'>Login</a>
+                                    <a href='index.php' class='btn akame-btn'>Logout</a>
                                     </div>";
                                 }
                                 ?>
@@ -117,33 +128,110 @@ session_start();
     </header>
     <!-- Header Area End -->
 
-    <!-- Vision and Mission Area Start -->
-    <section class="why-choose-us-area bg-gray section-padding-80-0">
+    <!-- Breadcrumb Area Start -->
+    <section class="breadcrumb-area section-padding-80">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-12 col-lg-6">
-                    <!-- Section Heading -->
-                    
-                        <h2>Welcome to the Lil Apple Hair Salon Family!</h2>
-                        <br>
-                        <br>
-                        <h3>Company Vision</h3>
-                        <p>To be the premier destination for beauty and self-expression, where every client experiences personalized, high-quality hair care in a welcoming and inspiring environment.</p>
-                        <br>
-                        <h3>Company Mission</h3>
-                        <p>At Lil Apple Hair Saloon, we are committed to enhancing the natural beauty of our clients through expert hairstyling and personalized services. Our mission is to create a space where creativity and individuality flourish, and where our skilled team of professionals is dedicated to delivering exceptional customer experiences. We strive to stay at the forefront of industry trends, using the latest techniques and premium products to ensure that every visit to our salon is a rejuvenating and empowering experience. Our goal is to build lasting relationships with our clients, founded on trust, expertise, and a shared commitment to beauty and self-care.</p>
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        <h2>Book an Appointment</h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="icon_house_alt"></i> Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Appointment</li>
+                            </ol>
+                        </nav>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Vision and Mission Area End -->
-    
-     <!-- Border -->
+    <!-- Breadcrumb Area End -->
+
+    <!-- News Area Start -->
+    <section class="akame-news-area section-padding-0-80">
+        <div class="container">
+            <h2> Your Hair, Your Canvas. </h2>
+            <form action="bookings.php" method="post">
+            <div class="form-container">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-container">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-container">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            
+            <div class="form-container">
+                <label for="date">Preferred Date:</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            
+            <div class="form-container">
+                <label for="time">Preferred Time:</label>
+                <input type="time" id="time" name="time" required>
+            </div>
+            
+            <div class="form-container">
+                <label for="service">Select Service:</label>
+                <select id="service" name="service">
+                    <option disabled selected value=""> Please Select </option>
+                    <option value="haircut">Haircut</option>
+                    <option value="coloring">Hair Coloring</option>
+                    <option value="styling">Hair Styling</option>
+                    <option value="highlights">Highlights</option>
+                    <option value="perming">Perming</option>
+                    <option value="rebonding">Rebonding</option>
+                </select>
+            </div>
+
+            <div class="form-container">
+                <label for="stylist">Select Hairstylist:</label>
+                <select id="stylist" name="stylist">
+                    <option disabled selected value=""> Please Select </option>
+                    <option value="zk">Zhang Kan</option>
+                    <option value="j">Jasper</option>
+                    <option value="wayne">Wayne</option>
+                    <option value="wh">Wai Hoe</option>
+                </select>
+            </div>
+            
+            <div class="form-container">
+                <label for="message">Remarks:</label>
+                <textarea id="message" name="message" rows="4"></textarea>
+            </div>
+                <br>
+                <br>
+            <div class="button-container">
+                <input type="submit" value="Submit"> 
+                <input type="reset" value="Reset"> 
+            </div>
+            
+            </form>
+            <div class="back-to">
+            <form action="loggedinservices.php" method="post">
+            <input type="submit" value="Back to Services"> 
+            </form>
+            </div>
+            </div>
+
+            
+            
+            </div>
+        </section>
+        <!-- News Area End -->
+
+    <!-- Border -->
     <div class="container">
-        <div class="border-top mt-3"></div>
+        <div class="border-top"></div>
     </div>
-    
+
     <!-- Footer Area Start -->
     <footer class="footer-area section-padding-80-0">
         <div class="container">

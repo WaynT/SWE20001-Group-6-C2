@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Title -->
-    <title>Epil & Beauty</title>
+    <title>Lil Apple Hair Salon</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="./img/core-img/favicon.ico">
+    <link rel="icon" href="./img/core-img/Lilapple.png">
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
@@ -84,7 +84,7 @@
                         <h2>Book an Appointment</h2>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html"><i class="icon_house_alt"></i> Home</a></li>
+                                <li class="breadcrumb-item"><a href="index.php"><i class="icon_house_alt"></i> Home</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Appointment</li>
                             </ol>
                         </nav>
@@ -95,9 +95,16 @@
     </section>
     <!-- Breadcrumb Area End -->
 
+    <div class="check-availability">
+            <form action="availability.php" method="post">
+            <input type="submit" value="Check Availability"> 
+            </form>
+    </div>
+
     <!-- News Area Start -->
     <section class="akame-news-area section-padding-0-80">
         <div class="container">
+            <h2> Your Hair, Your Canvas. </h2>
             <form action="bookings.php" method="post">
             <div class="form-container">
                 <label for="name">Name:</label>
@@ -128,12 +135,23 @@
                 <label for="service">Select Service:</label>
                 <select id="service" name="service">
                     <option disabled selected value=""> Please Select </option>
-                    <option value="haircut">Haircut</option>
-                    <option value="coloring">Hair Coloring</option>
-                    <option value="styling">Hair Styling</option>
-                    <option value="highlights">Highlights</option>
-                    <option value="perming">Perming</option>
-                    <option value="rebonding">Rebonding</option>
+                    <option value="Haircut">Haircut</option>
+                    <option value="Hair Coloring">Hair Coloring</option>
+                    <option value="Hair Styling">Hair Styling</option>
+                    <option value="Highlights">Highlights</option>
+                    <option value="Perming">Perming</option>
+                    <option value="Rebonding">Rebonding</option>
+                </select>
+            </div>
+
+            <div class="form-container">
+                <label for="stylist">Select Hairstylist:</label>
+                <select id="stylist" name="stylist">
+                    <option disabled selected value=""> Please Select </option>
+                    <option value="Zhang Kan">Zhang Kan</option>
+                    <option value="Jasper">Jasper</option>
+                    <option value="Wayne">Wayne</option>
+                    <option value="Wai Hoe">Wai Hoe</option>
                 </select>
             </div>
             
@@ -141,17 +159,18 @@
                 <label for="message">Remarks:</label>
                 <textarea id="message" name="message" rows="4"></textarea>
             </div>
-                
+            
+            <br>
             <div class="button-container">
                 <input type="submit" value="Submit"> 
                 <input type="reset" value="Reset"> 
             </div>
-            
             </form>
-            </div>
 
+            <br>
+            <br>
             <div class="back-to">
-            <form action="blog.html" method="post">
+            <form action="services.php" method="post">
             <input type="submit" value="Back to Services"> 
             </form>
             </div>
@@ -174,16 +193,10 @@
                 <div class="col-12 col-sm-6 col-md-4">
                     <div class="single-footer-widget mb-80">
                         <!-- Footer Logo -->
-                        <a href="#" class="footer-logo"><img width="100" src="img/core-img/logo.png" alt=""></a>
+                        <a href="#" class="footer-logo"><img src="img/core-img/logo.png" alt=""></a>
 
-                        <p class="mb-30">We would love to serve you and let you enjoy your culinary experience. Excepteur sint occaecat cupidatat non proident.</p>
+                        <p class="mb-30">We would love to serve you and let you enjoy your hairstyling journey.</p>
 
-                        <!-- Copywrite Text -->
-                        <div class="copywrite-text">
-                            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                        </div>
                     </div>
                 </div>
 
@@ -218,9 +231,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
                         <!-- Contact Address -->
                         <div class="contact-address">
-                            <p>Tel: (+12) 345 678 910</p>
-                            <p>E-mail: Hello.colorlib@gmail.com</p>
-                            <p>Address: Iris Watson, P.O. Box 283 8562 Fusce Rd, NY</p>
+                            <p>Tel: (+60) 12-345-6789</p>
+                            <p>E-mail: xiaopingguo@gmail.com</p>
+                            <p>Address: 3, Jalan SS 15/8, Ss 15, 47500 Subang Jaya, Selangor</p>
                         </div>
                     </div>
                 </div>
